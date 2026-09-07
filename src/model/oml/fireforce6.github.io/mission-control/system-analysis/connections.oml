@@ -40,6 +40,16 @@ description <https://fireforce6.github.io/mission-control/system-analysis/connec
     instance CommandSignal : component:Signal []
     instance ElectricalPower : component:Energy []
 
+    ref instance components:DataStorageInterfaceUnit [
+        component:hasPort DataStorageInterfaceUnit.Data_Out
+    ]
+    instance DataStorageInterfaceUnit.Data_Out : component:Port [ component:direction "Out" ]
+    
+    ref instance components:DataStoragePowerRegulator [
+        component:hasPort DataStoragePowerRegulator.Power_In
+    ]
+    instance DataStoragePowerRegulator.Power_In : component:Port [ component:direction "In" ]
+    
     relation instance Conn_FireSatCmd_to_Platform : component:Connection [
         from FireSat.Command_In
         to Platform.Command_In
@@ -69,5 +79,16 @@ description <https://fireforce6.github.io/mission-control/system-analysis/connec
         to FireSat.Telemetry_Out
         component:transfers TelemetrySignal
     ]
-
-}
+    
+    relation instance Conn_PlatformPower_to_DataStorage : component:Connection [
+    from Platform.Power_Out
+    to DataStoragePowerRegulator.Power_In
+    component:transfers ElectricalPower
+    ]
+    
+    relation instance Conn_DataStorage_to_Platform : component:Connection [
+    from DataStorageInterfaceUnit.Data_Out
+    to Platform.Data_In
+    component:transfers TelemetrySignal
+    ]
+    }

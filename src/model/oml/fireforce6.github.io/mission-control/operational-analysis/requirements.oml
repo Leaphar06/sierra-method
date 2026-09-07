@@ -60,5 +60,21 @@ description <https://fireforce6.github.io/mission-control/operational-analysis/r
         stakeholder:isStatedBy stakeholders:CommandCenter
         base:category "L2"
         base:priority "Medium"
+    ]    
+    
+    instance R8 : stakeholder:Requirement [
+        base:description "Data Integrity Monitoring"
+        base:expression "The system shall monitor and report the health and integrity of stored fire and drone data."
+        stakeholder:isStatedBy stakeholders:SystemsEngineer
+        base:category "L2"
+        base:priority "Medium"
+    ]
+
+    instance R9 : stakeholder:Requirement [
+        base:description "Historical Data Retrieval"
+        base:expression "The system shall allow operators to retrieve stored historical fire and drone data on demand."
+        stakeholder:isStatedBy stakeholders:Operator
+        base:category "L1"
+        base:priority "High"
     ]
 }

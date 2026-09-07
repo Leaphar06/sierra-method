@@ -268,6 +268,31 @@ description <https://fireforce6.github.io/mission-control/system-analysis/compon
         base:isContainedBy DataStorage
     ]
 
+    instance DataBuffer : component:Component [
+        base:description "64MB SRAM Cache Buffer"
+        base:isContainedBy DataStorage
+    ]
+
+    instance DataStorageInterfaceUnit : component:Component [
+        base:description "SpaceWire Interface to Data Storage"
+        base:isContainedBy DataStorage
+    ]
+
+    instance DataStoragePowerRegulator : component:Component [
+        base:description "3.3V Buffer Memory"
+        base:isContainedBy DataStorage
+    ]
+    
+    instance DataStorageTemperatureSensor : component:Component [
+        base:description "Temperature Sensor- Data Storage"
+        base:isContainedBy DataStorage
+    ]
+
+    instance StorageModule3 : component:Component [
+        base:description "128GB Flash Backup Storage Module"
+        base:isContainedBy DataStorage
+    ]
+
     instance PropulsionSubsystem : component:Component [
         base:description "Reaction Control System"
         base:isContainedBy PropulsionSegment

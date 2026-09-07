@@ -133,6 +133,25 @@ description <https://fireforce6.github.io/mission-control/system-analysis/masses
     ref instance components:StorageController : component:PhysicalPart [
         component:mass 0.5^^si:kg
     ]
+    ref instance components:StorageModule3 : component:PhysicalPart [
+    component:mass 2^^si:kg
+    ]
+
+    ref instance components:DataBuffer : component:PhysicalPart [
+    component:mass 0.1^^si:kg
+    ]
+
+    ref instance components:DataStorageInterfaceUnit : component:PhysicalPart [
+    component:mass 0.1^^si:kg
+    ]
+
+    ref instance components:DataStoragePowerRegulator : component:PhysicalPart [
+    component:mass 0.3^^si:kg
+    ]
+
+    ref instance components:DataStorageTemperatureSensor : component:PhysicalPart [
+    component:mass 0.1^^si:kg
+    ]
 
     ref instance components:ThrusterValve1 : component:PhysicalPart [
         component:mass 0.8^^si:kg
