@@ -1,22 +1,32 @@
 description <https://fireforce6.github.io/mission-control/system-analysis/connections#> as connections {
-
-	extends <https://fireforce6.github.io/mission-control/system-analysis/components#> as components
-
-	uses <https://www.modelware.io/sierra/component#> as component
+    extends <https://fireforce6.github.io/mission-control/system-analysis/components#> as components
+    uses <https://www.modelware.io/sierra/component#> as component
 
     ref instance components:FireSat [
         component:hasPort FireSat.Command_In
         component:hasPort FireSat.Telemetry_Out
     ]
-    instance FireSat.Command_In : component:Port [ component:direction "In" ]
-    instance FireSat.Telemetry_Out : component:Port [ component:direction "Out" ]
+
+    instance FireSat.Command_In : component:Port [
+        component:direction "In"
+    ]
+
+    instance FireSat.Telemetry_Out : component:Port [
+        component:direction "Out"
+    ]
 
     ref instance components:Payload [
         component:hasPort Payload.Data_Out
         component:hasPort Payload.Power_In
     ]
-    instance Payload.Data_Out : component:Port [ component:direction "Out" ]
-    instance Payload.Power_In : component:Port [ component:direction "In" ]
+
+    instance Payload.Data_Out : component:Port [
+        component:direction "Out"
+    ]
+
+    instance Payload.Power_In : component:Port [
+        component:direction "In"
+    ]
 
     ref instance components:Platform [
         component:hasPort Platform.Data_In
@@ -24,32 +34,59 @@ description <https://fireforce6.github.io/mission-control/system-analysis/connec
         component:hasPort Platform.Power_Out
         component:hasPort Platform.Command_In
     ]
-    instance Platform.Data_In : component:Port [ component:direction "In" ]
-    instance Platform.Data_Out : component:Port [ component:direction "Out" ]
-    instance Platform.Power_Out : component:Port [ component:direction "Out" ]
-    instance Platform.Command_In : component:Port [ component:direction "In" ]
+
+    instance Platform.Data_In : component:Port [
+        component:direction "In"
+    ]
+
+    instance Platform.Data_Out : component:Port [
+        component:direction "Out"
+    ]
+
+    instance Platform.Power_Out : component:Port [
+        component:direction "Out"
+    ]
+
+    instance Platform.Command_In : component:Port [
+        component:direction "In"
+    ]
 
     ref instance components:PropulsionSegment [
         component:hasPort Propulsion.Command_In
         component:hasPort Propulsion.Power_In
     ]
-    instance Propulsion.Command_In : component:Port [ component:direction "In" ]
-    instance Propulsion.Power_In : component:Port [ component:direction "In" ]
 
-    instance TelemetrySignal : component:Signal []
-    instance CommandSignal : component:Signal []
-    instance ElectricalPower : component:Energy []
+    instance Propulsion.Command_In : component:Port [
+        component:direction "In"
+    ]
+
+    instance Propulsion.Power_In : component:Port [
+        component:direction "In"
+    ]
+
+    instance TelemetrySignal : component:Signal
+
+    instance CommandSignal : component:Signal
+
+    instance ElectricalPower : component:Energy
 
     ref instance components:DataStorageInterfaceUnit [
         component:hasPort DataStorageInterfaceUnit.Data_Out
+        component:hasPort DataStorageInterfaceUnit.Data_In
     ]
-    instance DataStorageInterfaceUnit.Data_Out : component:Port [ component:direction "Out" ]
-    
+
+    instance DataStorageInterfaceUnit.Data_Out : component:Port [
+        component:direction "Out"
+    ]
+
     ref instance components:DataStoragePowerRegulator [
         component:hasPort DataStoragePowerRegulator.Power_In
     ]
-    instance DataStoragePowerRegulator.Power_In : component:Port [ component:direction "In" ]
-    
+
+    instance DataStoragePowerRegulator.Power_In : component:Port [
+        component:direction "In"
+    ]
+
     relation instance Conn_FireSatCmd_to_Platform : component:Connection [
         from FireSat.Command_In
         to Platform.Command_In
@@ -79,16 +116,78 @@ description <https://fireforce6.github.io/mission-control/system-analysis/connec
         to FireSat.Telemetry_Out
         component:transfers TelemetrySignal
     ]
-    
+
     relation instance Conn_PlatformPower_to_DataStorage : component:Connection [
-    from Platform.Power_Out
-    to DataStoragePowerRegulator.Power_In
-    component:transfers ElectricalPower
+        from Platform.Power_Out
+        to DataStoragePowerRegulator.Power_In
+        component:transfers ElectricalPower
     ]
-    
+
     relation instance Conn_DataStorage_to_Platform : component:Connection [
-    from DataStorageInterfaceUnit.Data_Out
-    to Platform.Data_In
-    component:transfers TelemetrySignal
+        from DataStorageInterfaceUnit.Data_Out
+        to Platform.Data_In
+        component:transfers TelemetrySignal
     ]
-    }
+
+    ref instance components:PayloadInterface [
+        component:hasPort PayloadInterface.Data_Out
+    ]
+
+    instance PayloadInterface.Data_Out : component:Port [
+        component:direction "Out"
+    ]
+
+    instance DataStorageInterfaceUnit.Data_In : component:Port [
+        component:direction "In"
+    ]
+
+    relation instance Conn_PayloadInterface_to_DataStorage : component:Connection [
+        from PayloadInterface.Data_Out
+        to DataStorageInterfaceUnit.Data_In
+        component:transfers TelemetrySignal
+    ]
+
+    ref instance components:SBandReceiver [
+        component:hasPort SBandReceiver.Command_Out
+    ]
+
+    instance SBandReceiver.Command_Out : component:Port [
+        component:direction "Out"
+    ]
+
+    ref instance components:IOController [
+        component:hasPort IOController.Command_In
+    ]
+
+    instance IOController.Command_In : component:Port [
+        component:direction "In"
+    ]
+
+    relation instance Conn_SBandReceiver_to_DataStorage : component:Connection [
+        from SBandReceiver.Command_Out
+        to IOController.Command_In
+        component:transfers CommandSignal
+    ]
+
+    ref instance components:StarTracker [
+        component:hasPort StarTracker.Attitude_Out
+    ]
+
+    instance StarTracker.Attitude_Out : component:Port [
+        component:direction "Out"
+    ]
+
+    ref instance components:MainProcessor [
+        component:hasPort MainProcessor.Attitude_In
+    ]
+
+    instance MainProcessor.Attitude_In : component:Port [
+        component:direction "In"
+    ]
+
+    relation instance Conn_StarTracker_to_MainProcessor : component:Connection [
+        from StarTracker.Attitude_Out
+        to MainProcessor.Attitude_In
+        component:transfers TelemetrySignal
+    ]
+}

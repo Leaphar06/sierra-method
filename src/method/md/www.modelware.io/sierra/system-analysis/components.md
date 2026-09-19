@@ -43,6 +43,12 @@ component:ComponentShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+    sh:path component:hasPort ;
+    sh:name "Ports" ;
+    sh:class component:Port ;
+    sh:order 3 ;
+    ] ;
+    sh:property [
         sh:path rdfs:seeAlso ;
         sh:name "See Also" ;
         sh:datatype xsd:anyURI ;
