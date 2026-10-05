@@ -60,8 +60,8 @@ description <https://fireforce6.github.io/mission-control/operational-analysis/r
         stakeholder:isStatedBy stakeholders:CommandCenter
         base:category "L2"
         base:priority "Medium"
-    ]    
-    
+    ]
+
     instance R8 : stakeholder:Requirement [
         base:description "Data Integrity Monitoring"
         base:expression "The system shall monitor and report the health and integrity of stored fire and drone data."
@@ -76,5 +76,18 @@ description <https://fireforce6.github.io/mission-control/operational-analysis/r
         stakeholder:isStatedBy stakeholders:Operator
         base:category "L1"
         base:priority "High"
+    ]
+
+    instance R10 : stakeholder:Requirement [
+        base:description "Low Battery Alert"
+        base:expression "The system shall alert the operator when a drone's battery falls below 20%."
+        base:priority "High"
+        base:category "L1"
+        stakeholder:isStatedBy stakeholders:Operator
+    ]
+
+    instance R11 : stakeholder:Requirement [
+        base:description "Command Logging"
+        base:expression "The system shall log all operator commands for later review."
     ]
 }
