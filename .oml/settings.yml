@@ -5,7 +5,7 @@ oml-code:
 # project npm settings
 project:
   name: "@oml/fireforce6"
-  version: 0.1.0
+  version: 0.2.0
   title: Fire Force VI
   description: The Fire Force VI architecture
 
